@@ -5,14 +5,17 @@
 
 mod asset_tracking;
 mod audio;
-mod demo;
 #[cfg(feature = "dev")]
 mod dev_tools;
+mod level;
 mod menus;
 mod screens;
 mod theme;
+mod random;
 
-use bevy::{asset::AssetMetaCheck, prelude::*};
+use bevy::{asset::AssetMetaCheck, prelude::*, render::camera::ScalingMode};
+
+const SCREEN_SIZE: Vec2 = Vec2::new(1920., 1080.);
 
 fn main() -> AppExit {
     App::new().add_plugins(AppPlugin).run()
@@ -36,6 +39,7 @@ impl Plugin for AppPlugin {
                     primary_window: Window {
                         title: "Bevy Game 6".to_string(),
                         fit_canvas_to_parent: true,
+                        resolution: (1280., 720.).into(),
                         ..default()
                     }
                     .into(),
@@ -47,12 +51,14 @@ impl Plugin for AppPlugin {
         app.add_plugins((
             asset_tracking::plugin,
             audio::plugin,
-            demo::plugin,
             #[cfg(feature = "dev")]
             dev_tools::plugin,
             menus::plugin,
             screens::plugin,
             theme::plugin,
+
+            random::plugin,
+            level::plugin,
         ));
 
         // Order new `AppSystems` variants by adding them here:
@@ -97,6 +103,22 @@ struct Pause(pub bool);
 #[derive(SystemSet, Copy, Clone, Eq, PartialEq, Hash, Debug)]
 struct PausableSystems;
 
+
 fn spawn_camera(mut commands: Commands) {
-    commands.spawn((Name::new("Camera"), Camera2d));
+    let mut projection = OrthographicProjection::default_2d();
+    projection.scaling_mode = ScalingMode::Fixed {
+        width: SCREEN_SIZE.x,
+        height: SCREEN_SIZE.y,
+    };
+
+    commands.spawn((
+        Name::new("Camera"),
+        Camera2d,
+        Projection::Orthographic(projection),
+        // projection.compute_frustum(&GlobalTransform::from(Transform::default())),
+    ));
+}
+
+pub fn screen_rect(center: Vec2, size: Vec2) -> Rect {
+    Rect::from_center_size(SCREEN_SIZE * center, SCREEN_SIZE * size)
 }

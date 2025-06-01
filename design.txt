@@ -1,0 +1,55 @@
+# Name: Spellforge Legion
+
+# Spell
+- two types: base spell and spell upgrade
+- spell bases are composed from: trigger + effect + target
+- spell upgrades are composed from split + effect + target
+
+## triggers
+- on enemy hit
+- on enemy kill
+- on damage taken
+- on timer
+- on death
+
+## effects
+- projectile
+- area
+- (heal)
+
+## targets
+- (self)
+- enemy
+    - nearest, random, lowest hp
+- ally
+    - nearest, random, lowest hp, nearest with on death trigger
+
+## splits
+- for each enemy near
+- (for each enemy killed)
+- (for each enemy hit)
+- (for each ally near)
+- random n points near
+
+# spell obtaining
+- before each fight player will choose 3 random spell cards
+- player could also discard 2 spell cards to obtain 1 another random spell card
+
+# minions
+- color and name could be set by player (no they will be random)
+- at start player will start with 2 minions with random name and color (probably no names)
+- after each second battle player will obtain 1 minion
+
+# game over
+- player finishes the game by wining 10 battles
+- after that he could continue into infinity mode if he wishes
+- he will also obtain statistics
+- he can also lose the battle
+    - he can choose to forfeit and of his minions and repeat the day or to game over
+
+# game screens
+- menu
+- game over victory (including statistics)
+- game over lose
+- minion management
+- arena
