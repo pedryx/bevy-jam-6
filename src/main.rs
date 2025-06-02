@@ -9,9 +9,9 @@ mod audio;
 mod dev_tools;
 mod level;
 mod menus;
+mod random;
 mod screens;
 mod theme;
-mod random;
 
 use bevy::{asset::AssetMetaCheck, prelude::*, render::camera::ScalingMode};
 
@@ -56,7 +56,6 @@ impl Plugin for AppPlugin {
             menus::plugin,
             screens::plugin,
             theme::plugin,
-
             random::plugin,
             level::plugin,
         ));
@@ -102,7 +101,6 @@ struct Pause(pub bool);
 /// A system set for systems that shouldn't run while the game is paused.
 #[derive(SystemSet, Copy, Clone, Eq, PartialEq, Hash, Debug)]
 struct PausableSystems;
-
 
 fn spawn_camera(mut commands: Commands) {
     let mut projection = OrthographicProjection::default_2d();

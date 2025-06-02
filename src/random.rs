@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use rand::{rngs::StdRng, Rng, SeedableRng};
+use rand::{Rng, SeedableRng, rngs::StdRng};
 
 pub fn plugin(app: &mut App) {
     app.init_resource::<GlobalRng>();
